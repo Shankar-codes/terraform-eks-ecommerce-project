@@ -3,7 +3,7 @@ module "eks" {
   version = "~> 21.0" # this is module version, not the eks version. Check
 
   name               = local.common_name_suffix
-  kubernetes_version = "1.32"
+  kubernetes_version = "1.33"
 
   addons = {
     coredns                = {}
@@ -33,7 +33,21 @@ module "eks" {
 
   # EKS Managed Node Group(s)
   eks_managed_node_groups = {
-    blue = {
+    # blue = {
+    #   # Starting on 1.30, AL2023 is the default AMI type for EKS managed node groups
+    #   ami_type       = "AL2023_x86_64_STANDARD"
+    #   instance_types = ["t3.small"]
+    #   iam_role_additional_policies = {
+    #     amazonEBS= "arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy"
+    #     amazonEFS= "arn:aws:iam::aws:policy/service-role/AmazonEFSCSIDriverPolicy"
+    #   }
+    #   # cluster node autoscaling
+    #   min_size     = 2
+    #   max_size     = 10
+    #   desired_size = 2
+    # }
+
+    green = {
       # Starting on 1.30, AL2023 is the default AMI type for EKS managed node groups
       ami_type       = "AL2023_x86_64_STANDARD"
       instance_types = ["t3.small"]
@@ -45,6 +59,15 @@ module "eks" {
       min_size     = 2
       max_size     = 10
       desired_size = 2
+
+      
+      # taints = {
+      #   upgrade = {
+      #     key = "upgrade"
+      #     value = "true"
+      #     effect = "NO_SCHEDULE"
+      #   }
+      # }
     }
   }
 
