@@ -4,7 +4,7 @@ module "eks" {
 
   name               = local.common_name_suffix
   #kubernetes_version = "1.33"
-  kubernetes_version = var.eks_kubernetes_version
+  kubernetes_version = var.eks_version
   addons = {
     coredns                = {}
     eks-pod-identity-agent = {
@@ -36,7 +36,7 @@ module "eks" {
     blue = {
       create = var.enable_blue
       # Starting on 1.30, AL2023 is the default AMI type for EKS managed node groups
-      kuernetes_version = var.eks_nodegroup_blue_version
+      kubernetes_version = var.eks_nodegroup_blue_version
       ami_type       = "AL2023_x86_64_STANDARD"
       instance_types = ["t3.small"]
       iam_role_additional_policies = {
@@ -56,7 +56,7 @@ module "eks" {
     green = {
       # Starting on 1.30, AL2023 is the default AMI type for EKS managed node groups
       create = var.enable_green
-      kuernetes_version = var.eks_nodegroup_green_version
+      kubernetes_version = var.eks_nodegroup_green_version
       ami_type       = "AL2023_x86_64_STANDARD"
       instance_types = ["t3.small"]
       iam_role_additional_policies = {
