@@ -11,7 +11,7 @@ N="\e[0m"
 #########
 # Cluster Region and Name
 #########
-CLUSTER_NAME="roboshop-dev"
+CLUSTER_NAME="ellamma-roboshop-dev"
 AWS_REGION="us-east-1"
 
 EKS_TARGET_VERSION=$1
