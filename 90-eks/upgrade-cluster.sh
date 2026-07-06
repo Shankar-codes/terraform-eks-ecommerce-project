@@ -29,7 +29,7 @@ echo "Script started executed at: $(date)" | tee -a $LOG_FILE
 #########
 if [ "$#" -ne 1 ]; then
   echo -e "${R}Usage:${N} $0 <EKS_TARGET_VERSION>" | tee -a "$LOG_FILE"
-  echo -e "${R}Example:${N} $0 1.33" | tee -a "$LOG_FILE"
+  echo -e "${R}Example:${N} $0 1.34" | tee -a "$LOG_FILE"
   exit 1
 fi
 
