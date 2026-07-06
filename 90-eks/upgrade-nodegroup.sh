@@ -6,7 +6,7 @@ G="\e[32m"
 Y="\e[33m"
 N="\e[0m"
 
-CLUSTER_NAME="roboshop-dev"
+CLUSTER_NAME="ellamma-roboshop-dev"
 AWS_REGION="us-east-1"
 
 CURRENT_NG_VERSION="$1"  # blue|green
