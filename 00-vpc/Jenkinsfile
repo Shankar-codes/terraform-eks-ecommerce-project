@@ -9,11 +9,11 @@ pipeline {
         COURSE = 'Jenkins'
     }
 
-    options {
+    //options {
         //timeout(time: 1, unit: 'HOURS') 
         //disableConcurrentBuilds()
         //AnsiColor('xterm')
-    }
+    //}
 
 
     stages {
