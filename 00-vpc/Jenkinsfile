@@ -18,21 +18,26 @@ pipeline {
     stages {
         stage('terraform init') {
             steps {
+                withAWS(region:'us-east-1',credentials:'aws-creds'){
                 script {
                     sh """
+                        pwd
                         echo "Initializing Terraform... scripted shell command"
                         terraform init
                     """
+                }
                 }
             }
         }
         stage('terraform plan') {
             steps {
+                withAWS(region:'us-east-1',credentials:'aws-creds'){
                 script {
                     sh """
                         echo "Planning Terraform changes... scripted shell command"
                         terraform plan
                     """
+                    }
                 }
             }
         }
