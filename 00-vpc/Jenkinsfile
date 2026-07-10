@@ -45,12 +45,14 @@ pipeline {
         }
         stage('terraform apply') {
             steps {
+                withAWS(region:'us-east-1',credentials:'aws-creds'){
                 script {
                     sh """
                         cd 00-vpc
                         echo "Applying Terraform changes... scripted shell command"
                         terraform apply -auto-approve
                     """
+                }
                 }
             }
         }
