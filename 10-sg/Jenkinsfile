@@ -1,0 +1,75 @@
+pipeline {
+    agent {
+        node {
+            label 'AGENT-1'
+        }
+    }
+
+    environment { 
+        COURSE = 'Jenkins'
+    }
+
+    options {
+        timeout(time: 1, unit: 'HOURS') 
+        disableConcurrentBuilds()
+        ansiColor('xterm')
+    }
+
+
+    stages {
+        stage('terraform init') {
+            steps {
+                withAWS(region:'us-east-1',credentials:'aws-creds'){
+                script {
+                    sh """
+                        cd 10-sg
+                        echo "Initializing Terraform... scripted shell command"
+                        terraform init
+                    """
+                }
+                }
+            }
+        }
+        stage('terraform plan') {
+            steps {
+                withAWS(region:'us-east-1',credentials:'aws-creds'){
+                script {
+                    sh """
+                        cd 10-sg
+                        echo "Planning Terraform changes... scripted shell command"
+                        terraform plan
+                    """
+                    }
+                }
+            }
+        }
+        stage('terraform apply') {
+            steps {
+                withAWS(region:'us-east-1',credentials:'aws-creds'){
+                script {
+                    sh """
+                        cd 10-sg
+                        echo "Applying Terraform changes... scripted shell command"
+                        terraform apply -auto-approve
+                    """
+                }
+                }
+            }
+        }
+    }
+    post { 
+        always { 
+            echo 'I will always say Hello again!'
+            cleanWs()
+        }
+        success{
+            echo "Build and Test completed successfully!"
+        }
+        failure{
+            echo "Build or Test failed!"
+        }
+        aborted{
+            echo "Build or Test aborted!"
+        }
+    }
+}
