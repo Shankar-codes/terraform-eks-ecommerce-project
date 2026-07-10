@@ -56,6 +56,20 @@ pipeline {
                 }
             }
         }
+
+        stage('trigger SG') {
+            steps {
+                
+                script {
+                    sh """
+                        build job: '10-sg',
+                        wait: false,
+                        propagate: false
+                    """
+                }
+                
+            }
+        }
     }
     post { 
         always { 
