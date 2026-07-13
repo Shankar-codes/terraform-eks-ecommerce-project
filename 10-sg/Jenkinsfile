@@ -62,11 +62,11 @@ pipeline {
                 stage('bastion') {
                     steps {
                         script {
-                            sh """
+
                                 build job: '20-bastion',
                                 wait: false,
                                 propagate: false
-                            """
+                            
                         }
                         
                     }
@@ -75,11 +75,11 @@ pipeline {
                 stage('sg-rules') {
                     steps {
                         script {
-                            sh """
+                            
                                 build job: '30-sg-rules',
                                 wait: false,
                                 propagate: false
-                            """
+                            
                         }
                         
                     }
@@ -88,11 +88,11 @@ pipeline {
                 stage('ecr') {
                     steps {
                         script {
-                            sh """
+                            
                                 build job: '40-ecr',
                                 wait: false,
                                 propagate: false
-                            """
+                            
                         }
                         
                     }
@@ -101,22 +101,22 @@ pipeline {
                 stage('acm') {
                     steps {
                         script {
-                            sh """
+                            
                                 build job: '70-acm',
                                 wait: false,
                                 propagate: false
-                            """
+                            
                         }
                     }
                 }
                 stage('eks') {
                     steps {
                         script {
-                            sh """
+                            
                                 build job: '90-eks',
                                 wait: false,
                                 propagate: false
-                            """
+                            
                         }
                     }
                 }
@@ -127,11 +127,11 @@ pipeline {
             stage('bastion') {
                     steps {
                         script {
-                            sh """
+                            
                                 build job: '80-frontendalb',
                                 wait: false,
                                 propagate: false
-                            """
+                            
                         }
                         
                     }
