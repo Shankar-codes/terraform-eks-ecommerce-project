@@ -71,9 +71,28 @@ pipeline {
                         
                     }
                 }
-                stage('Test 2') {
+
+                stage('sg-rules') {
                     steps {
-                        echo "Running Test 2"
+                        script {
+                            sh """
+                                build job: '30-sg-rules',
+                                wait: false,
+                                propagate: false
+                            """
+                        }
+                        
+                    }
+                }
+                stage('acm') {
+                    steps {
+                        script {
+                            sh """
+                                build job: '70-acm',
+                                wait: false,
+                                propagate: false
+                            """
+                        }
                     }
                 }
             }
