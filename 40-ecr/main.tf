@@ -1,4 +1,4 @@
-resource "aws_ecr_repository" "foo" {
+resource "aws_ecr_repository" "ecr" {
   for_each = toset(var.ecr_name)
   name                 = each.value
   image_tag_mutability = "MUTABLE"
