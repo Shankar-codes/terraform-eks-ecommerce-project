@@ -35,7 +35,7 @@ pipeline {
                 withAWS(region:'us-east-1',credentials:'aws-creds'){
                 script {
                     sh """
-                        cd 30-sg-rules
+                        cd 20-bastion
                         echo "Planning Terraform changes... scripted shell command"
                         terraform plan
                     """
@@ -48,7 +48,7 @@ pipeline {
                 withAWS(region:'us-east-1',credentials:'aws-creds'){
                 script {
                     sh """
-                        cd 30-sg-rules
+                        cd 20-bastion
                         echo "Applying Terraform changes... scripted shell command"
                         terraform apply -auto-approve
                     """
