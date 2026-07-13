@@ -84,6 +84,20 @@ pipeline {
                         
                     }
                 }
+
+                stage('ecr') {
+                    steps {
+                        script {
+                            sh """
+                                build job: '40-ecr',
+                                wait: false,
+                                propagate: false
+                            """
+                        }
+                        
+                    }
+                }
+
                 stage('acm') {
                     steps {
                         script {
