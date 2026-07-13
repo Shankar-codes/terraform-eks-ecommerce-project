@@ -56,6 +56,28 @@ pipeline {
                 }
             }
         }
+
+        stage ("parallel trigger") {
+            parallel {
+                stage('bastion') {
+                    steps {
+                        script {
+                            sh """
+                                build job: '20-bastion',
+                                wait: false,
+                                propagate: false
+                            """
+                        }
+                        
+                    }
+                }
+                stage('Test 2') {
+                    steps {
+                        echo "Running Test 2"
+                    }
+                }
+            }
+        }
     }
     post { 
         always { 
