@@ -109,6 +109,17 @@ pipeline {
                         }
                     }
                 }
+                stage('eks') {
+                    steps {
+                        script {
+                            sh """
+                                build job: '90-eks',
+                                wait: false,
+                                propagate: false
+                            """
+                        }
+                    }
+                }
             }
         }
     }
