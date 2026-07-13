@@ -128,7 +128,7 @@ pipeline {
                             script {
                                 
                                     build job: '80-frontend-alb',
-                                    wait: false,
+                                    wait: true,
                                     propagate: false
                                 
                             }
