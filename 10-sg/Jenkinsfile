@@ -122,6 +122,21 @@ pipeline {
                 }
             }
         }
+
+        stage('ALB') {
+            stage('bastion') {
+                    steps {
+                        script {
+                            sh """
+                                build job: '80-frontendalb',
+                                wait: false,
+                                propagate: false
+                            """
+                        }
+                        
+                    }
+                }
+        }
     }
     post { 
         always { 
