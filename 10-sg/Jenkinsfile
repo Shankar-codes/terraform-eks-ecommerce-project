@@ -129,7 +129,7 @@ pipeline {
                     steps {
                         script {
                             
-                                build job: '80-frontendalb',
+                                build job: '80-frontend-alb',
                                 wait: false,
                                 propagate: false
                             
