@@ -61,11 +61,11 @@ pipeline {
             steps {
                 
                 script {
-                    sh """
+                    
                         build job: '10-sg',
                         wait: false,
                         propagate: false
-                    """
+                    
                 }
                 
             }
