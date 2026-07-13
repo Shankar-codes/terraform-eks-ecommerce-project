@@ -124,8 +124,7 @@ pipeline {
         }
     }
 
-    stages('ALB') {
-            stage('bastion') {
+    stage('ALB') {
                     steps {
                         script {
                             
@@ -136,7 +135,7 @@ pipeline {
                         }
                         
                     }
-                }
+
         }
     post { 
         always { 
