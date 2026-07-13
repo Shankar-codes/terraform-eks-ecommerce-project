@@ -1,5 +1,6 @@
 resource "aws_ecr_repository" "foo" {
-  name                 = "roboshop/catalogue"
+  for_each = toset(var.ecr_name)
+  name                 = each.value
   image_tag_mutability = "MUTABLE"
 
   image_scanning_configuration {
