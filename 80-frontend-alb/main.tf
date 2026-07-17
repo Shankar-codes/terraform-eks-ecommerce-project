@@ -5,7 +5,7 @@ resource "aws_lb" "ingress_alb" {
   security_groups    = [local.ingress_alb_sg_id]
   subnets            = local.public_subnet_ids
 
-  #enable_deletion_protection = true
+  enable_deletion_protection = true
 
   tags = merge(local.common_tags, {
     Name = "${local.common_name_suffix}-ingress-alb"
@@ -24,9 +24,9 @@ resource "aws_lb_listener" "ingress_alb" {
         type = "fixed-response"
 
         fixed_response {
-        content_type = "text/html"
-        message_body = "<h1>Welcome to the Ingress ALB</h1>"
-        status_code  = "200"
+          content_type = "text/html"
+          message_body = "<h1>Welcome to the Ingress ALB</h1>"
+          status_code  = "200"
         }
     }
 }
@@ -44,4 +44,40 @@ resource "aws_route53_record" "ingress_alb" {
     evaluate_target_health = true
   }
   
+}
+
+# target group for the frontend instance
+resource "aws_lb_target_group" "frontend" {
+  name     = "${local.common_name_suffix}-frontend"
+  port     = 8080
+  protocol = "HTTP"
+  target_type = "ip"
+  vpc_id   = local.vpc_id
+  deregistration_delay = 60 #waiting for 60 seconds before deregistering the instance from the target group
+  health_check {
+    path                = "/"
+    port                = 8080
+    protocol            = "HTTP"
+    interval            = 10
+    timeout             = 2
+    healthy_threshold   = 2
+    unhealthy_threshold = 2
+    matcher             = "200-299"
+  }
+}
+
+resource "aws_lb_listener_rule" "frontend" {
+  listener_arn = aws_lb_listener.ingress_alb.arn
+  priority     = 10
+
+  action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.frontend.arn
+  }
+
+  condition {
+    host_header {
+      values = ["dev.${var.domain_name}"] # if any once access dev.ellamma.fun
+    }
+  }
 }
