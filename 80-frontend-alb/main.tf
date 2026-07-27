@@ -5,7 +5,7 @@ resource "aws_lb" "ingress_alb" {
   security_groups    = [local.ingress_alb_sg_id]
   subnets            = local.public_subnet_ids
 
-  enable_deletion_protection = true
+  #enable_deletion_protection = true
 
   tags = merge(local.common_tags, {
     Name = "${local.common_name_suffix}-ingress-alb"
@@ -66,6 +66,7 @@ resource "aws_lb_target_group" "frontend" {
   }
 }
 
+# you must install the AWS load balancer for this or else traffic wont go to dev.ellamma.com
 resource "aws_lb_listener_rule" "frontend" {
   listener_arn = aws_lb_listener.ingress_alb.arn
   priority     = 10
